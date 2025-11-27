@@ -8,17 +8,16 @@ const {
 } = require('@whiskeysockets/baileys');
 const pino = require('pino');
 const { Boom } = require('@hapi/boom');
-const readline = require('readline');
+const express = require('express'); // Tambahkan ini untuk health check
 const { messageHandler } = require('./handler');
 const { logStyle } = require('./lib/color');
 
 const usePairingCode = true; 
 const sessionDir = './session';
+const phoneNumber = '6285788918217'; // Pastikan nomor benar (tanpa spasi atau karakter lain)
 
-const question = (text) => {
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    return new Promise((resolve) => { rl.question(text, (ans) => { resolve(ans); rl.close(); })});
-};
+// Hapus fungsi question karena kita pakai nomor statis langsung
+// const question = (text) => { ... }; // Tidak perlu lagi
 
 async function startFanraBot() {
     console.clear();
@@ -47,15 +46,16 @@ async function startFanraBot() {
         return jid;
     };
 
+    // Langsung request pairing code untuk nomor statis jika belum ada creds
     if (usePairingCode && !sock.authState.creds.me) {
         console.log('\n');
-        const phoneNumber = await question('📞 Masukkan Nomor Bot (62xxx): ');
         setTimeout(async () => {
             try {
                 const code = await sock.requestPairingCode(phoneNumber.trim());
-                console.log(`\n🔑 KODE PAIRING: ${code?.match(/.{1,4}/g)?.join("-")}\n`);
-            } catch {
+                console.log(`\n🔑 KODE PAIRING UNTUK ${phoneNumber}: ${code?.match(/.{1,4}/g)?.join("-")}\n`);
+            } catch (err) {
                 logStyle('Gagal meminta kode. Coba lagi.', 'error');
+                console.error(err);
             }
         }, 2000);
     }
@@ -83,6 +83,18 @@ async function startFanraBot() {
         } catch (err) {
             console.log(err);
         }
+    });
+
+    // Setup Express server untuk health check (agar Koyeb bisa deploy sebagai web service)
+    const app = express();
+    const PORT = process.env.PORT || 8000; // Gunakan port dari env atau default 8000
+
+    app.get('/health', (req, res) => {
+        res.status(200).json({ status: 'OK', message: 'FanraBot is running' });
+    });
+
+    app.listen(PORT, () => {
+        logStyle(`Health check server running on port ${PORT}`, 'info');
     });
 }
 
