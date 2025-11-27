@@ -1,0 +1,6 @@
+{
+  "watch": ["index.js", "handler.js", "lib/", "plugins/"],
+  "ignore": ["session/", "database.json", "store.json"],
+  "ext": "js,json",
+  "delay": 1000
+}
