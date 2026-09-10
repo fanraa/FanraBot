@@ -1,0 +1,142 @@
+76:export function tryIntroduceTypo(text: string): { typed: string, correction: string | null } {
+324:export function detectUserLanguage(text: string, defaultLang: string): string {
+1584:export function containsHarassment(text: string): boolean {
+1634:              text: `⚠️ *Scheduled Menfess Delivery Failed!*\n\nRecipient (+${item.targetJid.split('@')[0]}) is currently in an active Menfess session with someone else.\n\nScheduled message: "${item.message}"` 
+1651:            await currentSock.sendMessage(item.targetJid, { text: message1 });
+1653:          await currentSock.sendMessage(item.targetJid, { text: message2 });
+1660:            text: `🔔 *Scheduled Menfess Delivered!*\n\nYour secret anonymous session of 5 minutes with target (+${item.targetJid.split('@')[0]}) has started successfully!` 
+1668:              text: `❌ *Scheduled Menfess Delivery Failed!*\n\nCould not deliver to (+${item.targetJid.split('@')[0]}): ${delErr.message || delErr}` 
+1682:  text: string;
+1827:function applyHumanTypo(text: string): string {
+1835:  text: string;
+1909:  text: string, 
+1947:    text: text,
+2536:      await sock.sendMessage(from, { text: warningText }, { quoted: msg });
+2735:function hasStickerIntent(text: string): boolean {
+2764:function hasDownloadIntent(text: string): boolean {
+2799:function extractDownloaderLink(text: string): string | null {
+2824:function hasStickerToImageIntent(text: string): boolean {
+2844:function hasQrGenerateIntent(text: string): boolean {
+2917:function hasQrReadIntent(text: string): boolean {
+2937:function hasToUrlIntent(text: string): boolean {
+3006:function hasPlayIntent(text: string): boolean {
+3035:function extractPlayQuery(text: string): string | null {
+3147:function hasCompressIntent(text: string): boolean {
+3219:function hasHdIntent(text: string): boolean {
+3232:function hasRestoreIntent(text: string): boolean {
+3244:function hasMusicIdIntent(text: string): boolean {
+3256:function hasToPdfIntent(text: string): boolean {
+3267:function hasToImgIntent(text: string): boolean {
+3278:function hasPdfInfoIntent(text: string): boolean {
+3285:function hasTranslateIntent(text: string): boolean {
+3296:function hasFileInspectorIntent(text: string): boolean {
+3307:function hasShortUrlIntent(text: string): boolean {
+3318:function wrapText(text: string, maxLen: number = 20): string {
+3334:async function createTextSticker(text: string): Promise<Buffer> {
+3604:function parseTargetLanguage(text: string): string {
+3620:function extractTranslateParams(text: string, quotedMsgText?: string) {
+3638:async function translateText(text: string, targetLang: string): Promise<string | null> {
+3739:function extractUrl(text: string, quotedMsgText?: string): string | null {
+3787:function hasRemoveBgIntent(text: string): boolean {
+4038:        logErrorOnce(`downloader-cobalt-returned-error-${endpoint}`, `[Downloader] Cobalt endpoint returned error text: ${data.text || data.error}`);
+4136:      { role: 'user', parts: [{ text: `Instruction:\n${systemPrompt}\n\nClient Message:\n${userPrompt}` }] }
+4402:            await sock.sendMessage(selfJid, { text: welcomeMsg });
+4605:    function checkRequirement(req: string, text: string, msg: any): boolean {
+4678:    function isCommandMessage(text: string): boolean {
+4715:    function isNaturalToolIntent(text: string): boolean {
+4757:    function shouldSkipAutoTranslate(text: string): boolean {
+4812:    async function translateAndDetect(text: string, targetLang: string): Promise<{ translated: string | null, srcLang: string | null }> {
+5133:            await sock.sendMessage(from, { text: 'wait..' }, { quoted: msg });
+5190:        await sock.sendMessage(from, { text: replyText }, rIdx === 0 ? { quoted: msg } : {});
+5240:            await sock.sendMessage(callerJid, { text: `📳 *Automated Call Reject System*\n\n${customRejectMsg}` });
+5309:                    text: alertMsg, 
+5320:                          text: `🛡️ *Proteksi Grup ${groupName}*\n\nHalo, Anda telah dikeluarkan oleh admin nakal @${authorCleanId}.\nKami telah menindak admin tersebut dengan mencopot atau mengeluarkan mereka. Silakan gabung kembali lewat link ini: ${inviteLink}`,
+5391:                text: formattedMsg,
+5518:            await sock.sendMessage(from, { text: "This command can only be used in group chats." }, { quoted: msg });
+5527:              await sock.sendMessage(from, { text: "Only group admins can use this feature." }, { quoted: msg });
+5536:                await sock.sendMessage(from, { text: "✅ Group has been opened successfully. All participants can now send messages." }, { quoted: msg });
+5538:                await sock.sendMessage(from, { text: `❌ Failed to open group: ${err.message}` }, { quoted: msg });
+5545:                await sock.sendMessage(from, { text: "🔒 Group has been closed successfully. Only admins can send messages." }, { quoted: msg });
+5547:                await sock.sendMessage(from, { text: `❌ Failed to close group: ${err.message}` }, { quoted: msg });
+5554:                await sock.sendMessage(from, { text: `🔗 *Group Invite Link*:\nhttps://chat.whatsapp.com/${code}` }, { quoted: msg });
+5556:                await sock.sendMessage(from, { text: `❌ Failed to retrieve group link: ${err.message}` }, { quoted: msg });
+5563:                await sock.sendMessage(from, { text: "✅ Group invite link has been successfully revoked and regenerated." }, { quoted: msg });
+5565:                await sock.sendMessage(from, { text: `❌ Failed to revoke link: ${err.message}` }, { quoted: msg });
+5572:                await sock.sendMessage(from, { text: "❌ Please reply to a message or mention the user to promote (e.g. @user)" }, { quoted: msg });
+5577:                await sock.sendMessage(from, { text: `✅ Successfully promoted @${targetJid.split('@')[0]} to Admin.`, mentions: [targetJid] }, { quoted: msg });
+5579:                await sock.sendMessage(from, { text: `❌ Failed to promote member: ${err.message}` }, { quoted: msg });
+5586:                await sock.sendMessage(from, { text: "❌ Please reply to a message or mention the user to demote (e.g. @user)" }, { quoted: msg });
+5591:                await sock.sendMessage(from, { text: `✅ Successfully demoted @${targetJid.split('@')[0]} to Member.`, mentions: [targetJid] }, { quoted: msg });
+5593:                await sock.sendMessage(from, { text: `❌ Failed to demote member: ${err.message}` }, { quoted: msg });
+5600:                await sock.sendMessage(from, { text: "❌ Please reply to a message or mention the user to kick (e.g. @user)" }, { quoted: msg });
+5605:                await sock.sendMessage(from, { text: `✅ Successfully kicked @${targetJid.split('@')[0]} from the group.`, mentions: [targetJid] }, { quoted: msg });
+5607:                await sock.sendMessage(from, { text: `❌ Failed to kick member: ${err.message}` }, { quoted: msg });
+5614:                await sock.sendMessage(from, { text: "❌ Please reply to the message you want to delete." }, { quoted: msg });
+5626:                await sock.sendMessage(from, { text: `❌ Failed to delete message: ${err.message}` }, { quoted: msg });
+5669:                    text: `⚠️ *DETEKSI ATTACK / SPAM VIRTEX EKSTREM* \n\nGrup ini dikunci sementara karena spam agresif tidak terkendali dari @${senderJid.split('@')[0]}.\n\n_Hanya admin yang saat ini dapat mengirim pesan guna melindungi perangkat anggota._`,
+5684:                    text: `🚫 @${senderJid.split('@')[0]} otomatis di-kick karena melakukan spam ekstrim (>15 pesan dalam 8 detik).`,
+5716:                    await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5719:                    await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5765:                  await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5812:                      await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5815:                      await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5858:                    await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5861:                    await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5895:                  await sock.sendMessage(from, { text: warnText, mentions: [senderJid] });
+5981:                await sock.sendMessage(from, { text: welcomeMsg });
+6040:              await sock.sendMessage(from, { text: profileMsg }, { quoted: msg });
+6047:              await sock.sendMessage(from, { text: pointsMsg }, { quoted: msg });
+6067:              await sock.sendMessage(from, { text: limitMsg }, { quoted: msg });
+6084:              await sock.sendMessage(from, { text: topMsg }, { quoted: msg });
+6129:              await sock.sendMessage(from, { text: `⚠️ The automation feature *${matchedBuiltin.title}* (${matchedBuiltin.command}) is currently disabled by the administrator.` }, { quoted: msg });
+6142:              await sock.sendMessage(from, { text: `🚫 This command can only be executed by the Bot Owner (System).` }, { quoted: msg });
+6151:              await sock.sendMessage(from, { text: `🚫 This command can only be used by Group Admins.` }, { quoted: msg });
+6162:              await sock.sendMessage(from, { text: matchedBuiltin.errorText }, { quoted: msg });
+6215:                await sock.sendMessage(from, { text: `🚫 This custom command can only be executed by the Bot Owner.` }, { quoted: msg });
+6223:                await sock.sendMessage(from, { text: `🚫 This custom command can only be used by Group Admins.` }, { quoted: msg });
+6253:                await sock.sendMessage(from, { text: resText }, { quoted: msg });
+6263:                await sock.sendMessage(from, { text: `${resText}\n\n*⚠️ Failed to load media attachment: ${err.message}*` }, { quoted: msg });
+6445:            await sock.sendMessage(from, { text: "⚠️ *Invalid Menfess Format!*\n\nUse: \`/menfes <receiver_number> <message>\`\nOr schedule it: \`/menfes <receiver_number> delay:<minutes>m <message>\`\n\nExample: \`/menfes 088291298977 Hello there\`\nExample: \`/menfes 088291298977 delay:5m Happy Birthday!\`" }, { quoted: msg });
+6451:            await sock.sendMessage(from, { text: "⚠️ *Invalid Menfess Format!*\n\nUse: \`/menfes <receiver_number> <message>\`\nOr schedule it: \`/menfes <receiver_number> delay:<minutes>m <message>\`\n\nExample: \`/menfes 088291298977 Hello there\`\nExample: \`/menfes 088291298977 delay:5m Happy Birthday!\`" }, { quoted: msg });
+6470:            await sock.sendMessage(from, { text: "❌ *Invalid WhatsApp Number!*\n\nPlease verify that the target phone number is correct (minimum 9 digits)." }, { quoted: msg });
+6477:            await sock.sendMessage(from, { text: "❌ *Daily Limit Reached!*\n\nYou have reached your maximum of 3 Menfess messages per day. Please wait until tomorrow!" }, { quoted: msg });
+6483:            await sock.sendMessage(from, { text: "❌ *Message Blocked!*\n\nYour message failed our safety filter because it contains inappropriate/harassing content. Please write polite and kind letters!" }, { quoted: msg });
+6501:              await sock.sendMessage(from, { text: "⚠️ *You are in an active Menfess session!*\n\nPlease type \`/stop\` to end your current session before starting a new one." }, { quoted: msg });
+6513:              await sock.sendMessage(from, { text: "⚠️ *Recipient Busy!*\n\nSorry, the recipient is currently in another active Menfess session with someone else. Please try again later." }, { quoted: msg });
+6550:              text: `🕒 *Menfess Scheduled Successfully!*\n\nYour secret message has been scheduled and will be sent anonymously to +${cleanNumber} in *${delayMinutes} minute(s)*.\n\nRemaining daily limit: *${limitCheck.remaining}/3*`
+6568:                await sock.sendMessage(targetJid, { text: message1 });
+6570:              await sock.sendMessage(targetJid, { text: message2 });
+6576:              await sock.sendMessage(from, { text: `✅ *Menfess Sent Successfully!*\n\nAn anonymous, secure chat session has been opened (max 5 mins).\nYour recipient's replies will be instantly forwarded to you right here.\n\nRemaining daily limit: *${limitCheck.remaining}/3*` }, { quoted: msg });
+6580:              await sock.sendMessage(from, { text: `❌ *Failed to deliver Menfess:* ${err.message || err}` }, { quoted: msg });
+6589:            await sock.sendMessage(from, { text: "⚠️ *No Active Confidential Session!*\n\nYou are not in an active Menfess chat. Type \`/menfes <number> <message>\` to start a new confidential letter." }, { quoted: msg });
+6596:            await sock.sendMessage(from, { text: "⏳ *Session Expired!*\n\nYour anonymous Menfess session has ended automatically (max 5 minutes limit). Please start a new one if needed." }, { quoted: msg });
+6608:            await sock.sendMessage(from, { text: "❌ *Reply Blocked!*\n\nYour message safety filter triggered. Messages containing profanity/blacklisted words are rejected." }, { quoted: msg });
+6629:            await sock.sendMessage(from, { text: "⚠️ *Message is Empty!*\n\nPlease key in a valid message: \`/reply <your message>\`" }, { quoted: msg });
+6642:              await sock.sendMessage(session.partnerJid, { text: replyTemplate });
+6653:            await sock.sendMessage(from, { text: "✅ *Reply Sent!* Your message has been safely forwarded." }, { quoted: msg });
+6655:            await sock.sendMessage(from, { text: `❌ *Could not deliver reply:* ${err.message || err}` }, { quoted: msg });
+6668:              await sock.sendMessage(from, { text: "🛑 *Menfess Session Ended!*\n\nYou have voluntarily closed the anonymous chat session." }, { quoted: msg });
+6669:              await sock.sendMessage(partnerJid, { text: "🛑 *Menfess Session Ended!*\n\nThe anonymous chat session has been terminated by your partner." });
+6672:            await sock.sendMessage(from, { text: "⚠️ You are not in an active Menfess chat." }, { quoted: msg });
+6681:            await sock.sendMessage(from, { text: "⚠️ *Active Menfess Session!*\n\nHarap gunakan perintah \`/reply <pesan>\` atau \`/send <pesan>\` untuk menjawab secara rahasia, atau ketik \`/stop\` untuk menghentikan obrolan.\n\n_Please use typing command \`/reply <message>\` or \`/send <message>\` to reply anonymously, or type \`/stop\` to exit._" }, { quoted: msg });
+6782:              text: helpResponse,
+6796:            await sock.sendMessage(from, { text: helpResponse }, { quoted: msg });
+6849:          await sock.sendMessage(from, { text: responseText }, { quoted: msg });
+6891:              await sock.sendMessage(from, { text: "Only group admins can modify this setting!" }, { quoted: msg });
+6970:              await sock.sendMessage(from, { text: "Invalid format.. use: `<feature> on` or `<feature> off`" }, { quoted: msg });
+6998:          await sock.sendMessage(from, { text: responseMessage }, { quoted: msg });
+7317:              await sock.sendMessage(from, { text: decodedResult }, { quoted: msg });
+7372:                    { text: ocrSystemPrompt },
+7386:            await sock.sendMessage(from, { text: `📝 *OCR Reader Result:*\n\n${extractedText}` }, { quoted: msg });
+7615:                  await sock.sendMessage(from, { text: msgText }, { quoted: msg });
+7728:                  await sock.sendMessage(from, { text: infoText }, { quoted: msg });
+7763:                await sock.sendMessage(from, { text: resultText }, { quoted: msg });
+7794:              await sock.sendMessage(from, { text: resultText }, { quoted: msg });
+7827:                await sock.sendMessage(from, { text: shorted }, { quoted: msg });
+7963:                  await sock.sendMessage(from, { text: finalUrl }, { quoted: msg });
+8184:                      await sock.sendMessage(from, { text: translateReply }, { quoted: msg });
+8282:          text: cleanedText
+8588:              await sock.sendMessage(from, { text: replyText }, rIdx === 0 ? { quoted: msg } : {});
+8625:              await sock.sendMessage(from, { text: finalFallback }, { quoted: msg });
+9471:      await sock.sendMessage(targetJid, { text: message });
+9538:    await sock.sendMessage(targetJid, { text: formattedMsg });

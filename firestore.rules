@@ -1,0 +1,106 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global Safety Net - Default Deny Catch-All
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global Reusable Security & Validation Helpers
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(email) {
+      return isSignedIn() && request.auth.token.email.lower() == email.lower();
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // BotConfig Validation Block
+    function isValidBotConfig(data) {
+      return data.keys().hasAll(['botName', 'systemPrompt', 'ownerNumber'])
+        && data.botName is string && data.botName.size() <= 100
+        && data.systemPrompt is string && data.systemPrompt.size() <= 4000
+        && data.ownerNumber is string && data.ownerNumber.size() <= 30;
+    }
+
+    // Command Validation Block
+    function isValidCommand(data) {
+      return data.keys().hasAll(['id', 'name', 'status', 'response'])
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() <= 100
+        && data.status is string && data.status.size() <= 20
+        && data.response is string && data.response.size() <= 2000;
+    }
+
+    // Provider Validation Block
+    function isValidProvider(data) {
+      return data.keys().hasAll(['id', 'name', 'status'])
+        && data.id is string && data.id.size() <= 50
+        && data.name is string && data.name.size() <= 50
+        && data.status is string && data.status.size() <= 20
+        && (!data.keys().contains('apiKey') || (data.apiKey is string && data.apiKey.size() <= 512));
+    }
+
+    // User Validation Block
+    function isValidUser(data) {
+      return data.keys().hasAll(['username', 'email', 'passwordHash', 'isVerified'])
+        && data.username is string && data.username.size() <= 100
+        && data.email is string && data.email.size() <= 100
+        && data.passwordHash is string && data.passwordHash.size() <= 128
+        && data.isVerified is bool;
+    }
+
+    // Users Collection Matching (Personalized Data Restriction)
+    match /users/{email} {
+      allow read: if isOwner(email);
+      allow write: if isOwner(email) && (resource == null || isValidUser(incoming()));
+
+      match /configs/{configId} {
+        allow read, write: if isOwner(email);
+      }
+      match /analytics/{analyticsId} {
+        allow read, write: if isOwner(email);
+      }
+      match /commands/{commandId} {
+        allow read, write: if isOwner(email);
+      }
+      match /providers/{providerId} {
+        allow read, write: if isOwner(email);
+      }
+      match /contacts/{contactId} {
+        allow read, write: if isOwner(email);
+      }
+      match /messages/{messageId} {
+        allow read, write: if isOwner(email);
+      }
+      match /logs/{logId} {
+        allow read, write: if isOwner(email);
+      }
+      match /group_configs/{groupId} {
+        allow read, write: if isOwner(email);
+      }
+      match /members/{memberId} {
+        allow read, write: if isOwner(email);
+      }
+    }
+
+    // OTP Verification Requests Mapping (System-Only Protection)
+    match /otp_requests/{email} {
+      // OTP handling happens strictly server-side (System-only) to protect code validation logic from external bypass.
+      allow read, write: if false;
+    }
+  }
+}

@@ -1,0 +1,145 @@
+{
+  "entities": {
+    "BotConfig": {
+      "title": "BotConfig",
+      "description": "Konfigurasi utama chatbot",
+      "type": "object",
+      "properties": {
+        "botName": { "type": "string", "description": "Nama bot" },
+        "languageStyle": { "type": "string", "description": "Gaya bahasa respon" },
+        "persona": { "type": "string", "description": "Persona kustom bot" },
+        "systemPrompt": { "type": "string", "description": "Sistem prompt AI" },
+        "autoReply": { "type": "boolean", "description": "Auto reply aktif/nonaktif" },
+        "groupReply": { "type": "boolean", "description": "Response grup aktif/nonaktif" },
+        "privateReply": { "type": "boolean", "description": "Response chat pribadi" },
+        "blockedNumbers": { "type": "string", "description": "Nomor - nomor terblokir" },
+        "aiMemory": { "type": "boolean", "description": "Apakah memori chat aktif" },
+        "typingEffect": { "type": "boolean", "description": "Status sedang mengetik di WA" },
+        "ownerNumber": { "type": "string", "description": "Nomor WhatsApp admin owner" },
+        "excludeKeywords": { "type": "string", "description": "Kata kunci dikecualikan" },
+        "commandPrefix": { "type": "string", "description": "Awalan perintah bot" },
+        "botTemperament": { "type": "string", "description": "Sifat / temperament bot" },
+        "defaultLanguage": { "type": "string", "description": "Bahasa default percakapan" }
+      },
+      "required": ["botName", "systemPrompt", "ownerNumber"]
+    },
+    "Command": {
+      "title": "Command",
+      "description": "Perintah teks khusus beserta responnya",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID perintah" },
+        "name": { "type": "string", "description": "Nama perintah (contoh: /start)" },
+        "category": { "type": "string", "description": "Kategori perintah" },
+        "status": { "type": "string", "description": "Status aktif/nonaktif" },
+        "response": { "type": "string", "description": "Pesan balasan dari perintah tersebut" }
+      },
+      "required": ["id", "name", "status", "response"]
+    },
+    "Provider": {
+      "title": "Provider",
+      "description": "Konfigurasi penyedia AI API",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID provider (gemini, groq, dll)" },
+        "name": { "type": "string", "description": "Nama provider" },
+        "status": { "type": "string", "description": "Status aktif/idle" },
+        "apiKey": { "type": "string", "description": "API Key penyedia AI" },
+        "lastValidated": { "type": "string", "description": "Tanggal terakhir divalidasi" }
+      },
+      "required": ["id", "name", "status"]
+    },
+    "User": {
+      "title": "User",
+      "description": "Informasi login & akun user FanraBot",
+      "type": "object",
+      "properties": {
+        "username": { "type": "string", "description": "Username pengguna" },
+        "email": { "type": "string", "description": "Alamat email unik pengguna" },
+        "passwordHash": { "type": "string", "description": "Bcrypt password hash" },
+        "isVerified": { "type": "boolean", "description": "Status verifikasi email via OTP" },
+        "createdAt": { "type": "string", "description": "Waktu pembentukan akun" }
+      },
+      "required": ["username", "email", "passwordHash", "isVerified"]
+    },
+    "Otp": {
+      "title": "Otp",
+      "description": "Status penyimpanan OTP sementara untuk verifikasi email",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "description": "Email target OTP" },
+        "otpHash": { "type": "string", "description": "Bcrypt/Plain hash otp" },
+        "expiredAt": { "type": "number", "description": "Timestamp kadaluarsa OTP (ms)" },
+        "attempts": { "type": "number", "description": "Jumlah percobaan verifikasi" },
+        "createdAt": { "type": "number", "description": "Timestamp dibuat" },
+        "tempRegisterData": {
+          "type": "object",
+          "description": "Data registrasi sementara sebelum verifikasi selesai",
+          "properties": {
+            "username": { "type": "string" },
+            "passwordHash": { "type": "string" }
+          }
+        }
+      },
+      "required": ["email", "otpHash", "expiredAt", "attempts", "createdAt"]
+    },
+    "Session": {
+      "title": "Session",
+      "description": "Sesi koneksi WhatsApp Baileys",
+      "type": "object",
+      "properties": {
+        "creds": { "type": "object", "description": "Data kredensial Baileys" },
+        "updatedAt": { "type": "string", "description": "Waktu update terakhir" }
+      },
+      "required": ["creds", "updatedAt"]
+    },
+    "Analytics": {
+      "title": "Analytics",
+      "description": "Metrik analitik performa chatbot WhatsApp",
+      "type": "object",
+      "properties": {
+        "pesanTerkirim": { "type": "number", "description": "Jumlah total pesan terkirim" },
+        "aiRespons": { "type": "number", "description": "Jumlah respon oleh AI" },
+        "kontakBaru": { "type": "number", "description": "Jumlah kontak baru yang terdeteksi" },
+        "totalResponTimeSec": { "type": "number", "description": "Total waktu respon dalam detik (sekala ms)" },
+        "totalResponCount": { "type": "number", "description": "Jumlah total respon tercatat" },
+        "uniqueJids": {
+          "type": "array",
+          "description": "Daftar ID WhatsApp unik yang berinteraksi",
+          "items": { "type": "string" }
+        }
+      },
+      "required": ["pesanTerkirim", "aiRespons", "kontakBaru", "totalResponTimeSec", "totalResponCount", "uniqueJids"]
+    }
+  },
+  "firestore": {
+    "users/{email}": {
+      "schema": "User",
+      "description": "Data kredensial pengguna FanraBot terpilih"
+    },
+    "users/{email}/configs/main": {
+      "schema": "BotConfig",
+      "description": "Dokumen tunggal penyimpanan konfigurasi utama chatbot milik user"
+    },
+    "users/{email}/configs/session": {
+      "schema": "Session",
+      "description": "Penyimpanan data sesi WhatsApp Baileys milik user"
+    },
+    "users/{email}/analytics/main": {
+      "schema": "Analytics",
+      "description": "Penyimpanan data analitik performa chatbot milik user"
+    },
+    "users/{email}/commands/{commandId}": {
+      "schema": "Command",
+      "description": "Penyimpanan daftar perintah teks responsif bot milik user"
+    },
+    "users/{email}/providers/{providerId}": {
+      "schema": "Provider",
+      "description": "Penyimpanan kredensial API key AI Provider milik user"
+    },
+    "otp_requests/{email}": {
+      "schema": "Otp",
+      "description": "Data OTP verifikasi registrasi aktif"
+    }
+  }
+}

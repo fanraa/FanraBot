@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Google AI Studio App</title>
+    <script id="fetch-fail-safe">
+      // Fail-safe to prevent fatal crash if any library/plugin attempts to set window.fetch
+      (function() {
+        var originalFetch = window.fetch;
+        var fetchValue = originalFetch;
+        try {
+          Object.defineProperty(window, 'fetch', {
+            get: function() { return fetchValue; },
+            set: function(val) { fetchValue = val; },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          console.warn('Silent fetch redefinition failed:', e);
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

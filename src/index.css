@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Outfit:wght@700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-primary: #2563eb;
+  --color-secondary: #5c5f60;
+  --color-tertiary: #4e5566;
+  --color-background: #f9f9ff;
+  --color-surface: #ffffff;
+  --color-surface-subtle: #f9fafb;
+  --color-surface-muted: #f3f4f6;
+  --color-on-surface: #111827;
+  --color-on-surface-variant: #374151;
+  --color-on-surface-muted: #6b7280;
+  --color-outline: #e5e7eb;
+  --color-outline-variant: #d1d5db;
+  
+  /* Additional SaaS colors from request */
+  --color-surface-container: #e7eefe;
+  --color-primary-container: #2563eb;
+  --color-on-primary: #ffffff;
+
+  /* Typography */
+  --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-brand: "Outfit", sans-serif;
+  
+  /* Border Radius */
+  --radius-sm: 0.25rem;
+  --radius-default: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+}
+
+@layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+  body {
+    @apply bg-background text-on-surface font-sans antialiased;
+  }
+}
+
+@keyframes shine {
+  0% {
+    left: -100%;
+  }
+  20%, 100% {
+    left: 120%;
+  }
+}
+
+.btn-shine-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-shine-effect::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: shine 5s infinite ease-in-out;
+}
+
+/* Custom Thin & Semi-Transparent Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(107, 114, 128, 0.15); /* Semi-transparan tipis (warna gray) */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(107, 114, 128, 0.3); /* Sedikit lebih kentara saat di-hover */
+}
+
+/* Firefox compatibility */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(107, 114, 128, 0.15) transparent;
+}
+
+@layer components {
+  .card {
+    @apply bg-white border border-outline rounded-lg shadow-sm overflow-hidden;
+  }
+  
+  .input-field {
+    @apply w-full px-4 py-2 bg-white border border-outline-variant rounded-md focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all placeholder:text-on-surface-muted/50;
+  }
+  
+  .btn-primary {
+    @apply px-4 py-2 bg-primary text-white font-medium rounded-md hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2;
+  }
+  
+  .btn-secondary {
+    @apply px-4 py-2 bg-white border border-outline text-on-surface-variant font-medium rounded-md hover:bg-surface-subtle transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2;
+  }
+  
+  .btn-ghost {
+    @apply px-4 py-2 text-on-surface-variant font-medium rounded-md hover:bg-surface-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2;
+  }
+}
+
+/* Disable focus outlines on Recharts SVG containers and elements */
+.recharts-wrapper, 
+.recharts-wrapper *, 
+.recharts-surface, 
+.recharts-surface *, 
+svg, 
+path, 
+rect {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
+}

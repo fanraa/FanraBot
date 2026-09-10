@@ -1,0 +1,8 @@
+{
+  "name": "FanraBot 1.8",
+  "description": "Platform AI Orchestration untuk membangun bot WhatsApp pintar dengan multi-provider AI dan alur kerja otomatis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
